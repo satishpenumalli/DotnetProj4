@@ -13,7 +13,7 @@
   <Import Project="$(TPath)"/> -->
   <PropertyGroup>
     
-    <WorkingDirectory>D:\Jenkins_workspace\workspace\.netbuild</WorkingDirectory>
+    <WorkingDirectory>D:\Jenkins_workspace\workspace\DotNet_CICDDEMO</WorkingDirectory>
     <SourceFolder>$(WorkingDirectory)\</SourceFolder>
     <DeployFolder>C:\inetpub\wwwroot\CICDDEMO</DeployFolder>
 	<DeployFolderDEV>C:\inetpub\wwwroot\CICDDEMO</DeployFolderDEV>
@@ -21,7 +21,7 @@
     <BuildConfiguartion>Release</BuildConfiguartion>
     <BuildLogsDirectory>D:\BuildLogs</BuildLogsDirectory>
     <DOUBLE_QUOTES>%22</DOUBLE_QUOTES>
-	<Deploy_Batchfile>D:\Jenkins_workspace\workspace\.netbuild</Deploy_Batchfile>
+	<Deploy_Batchfile>D:\Jenkins_workspace\workspace\DotNet_CICDDEMO</Deploy_Batchfile>
 	<Apppool>CICDDEMO</Apppool>
 	<dServer>127.0.0.1</dServer>
    
