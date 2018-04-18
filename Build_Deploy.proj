@@ -102,7 +102,7 @@
  </Target> 
 	
 	<Target Name="SwapPath" Condition=" '$(AppPool)' != ''">		
-		<Exec Command="c:\windows\system32\inetsrv\appcmd add site /name:CICDDEMOBackUp /bindings:"*:91:" /physicalPath:"D:\BackUP\CICDDEMO\%date%\" ContinueOnError="false">
+		<Exec Command="c:\windows\system32\inetsrv\appcmd add site /name:CICDDEMOBackUp /bindings:":91:" /physicalPath:"D:\BackUP\CICDDEMO\%date%\" ContinueOnError="false">
 		</Exec>
  	</Target> 
 	
