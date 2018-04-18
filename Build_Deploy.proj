@@ -30,7 +30,7 @@
 
    <Target Name="AllBuild">
 	<CallTarget Targets="BackUp" ContinueOnError="False"/>
-	   <CallTarget Targets="SwapPath" ContinueOnError="False"/>
+	   
 	<CallTarget Targets="PreBuild" ContinueOnError="false"/>
 	<CallTarget Targets="Build" ContinueOnError="false"/>
 	<CallTarget Targets="StopAppPool" ContinueOnError="True"/> 
