@@ -93,7 +93,7 @@
 		<!-- </Exec> -->
  <!-- </Target> -->
  
- <Target Name="StartAppPool" Condition=" '$(AppPool)' != ''">		
+ <Target Name="StopAppPool" Condition=" '$(AppPool)' != ''">		
 <Exec Command="c:\windows\system32\inetsrv\appcmd stop apppool /apppool.name:$(Apppool)" ContinueOnError="false">
 			 
 	 </Exec>
