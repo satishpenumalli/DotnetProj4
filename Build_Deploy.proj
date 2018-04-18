@@ -30,6 +30,7 @@
 
    <Target Name="AllBuild">
 	<CallTarget Targets="BackUp" ContinueOnError="False"/>
+	   <CallTarget Targets="SwapPath" ContinueOnError="False"/>
 	<CallTarget Targets="PreBuild" ContinueOnError="false"/>
 	<CallTarget Targets="Build" ContinueOnError="false"/>
 	<CallTarget Targets="StopAppPool" ContinueOnError="True"/> 
@@ -99,6 +100,11 @@
 			 
 	 </Exec>
  </Target> 
+	
+	<Target Name="SwapPath" Condition=" '$(AppPool)' != ''">		
+		<Exec Command="c:\windows\system32\inetsrv\appcmd add site /name:CICDDEMOBackUp /bindings:"http/*:91:" /physicalPath:"D:\BackUP\CICDDEMO\%date%\" ContinueOnError="false">
+		</Exec>
+ 	</Target> 
 	
 	<Target Name="BackUp">
     <Message Text="Copying the contents to DeployFolder Started...." />
