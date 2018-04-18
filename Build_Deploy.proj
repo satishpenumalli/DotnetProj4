@@ -107,7 +107,7 @@
   
 <Target Name="StartAppPool" Condition=" '$(AppPool)' != ''">		
 		 <Exec Command="psexec.exe \\$(dServer)  -d c:\windows\system32\inetsrv\appcmd start apppool /apppool.name:$(Apppool)" WorkingDirectory="C:\PSTools\" ContinueOnError="True"> -->
-			 <Output TaskParameter="Outputs" ItemName="T" /> -->
+			 <Output TaskParameter="Outputs" ItemName="T" /> 
 	 </Exec>
  </Target> 
 	
