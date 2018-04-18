@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Toolsversion="4.0"  DefaultTargets="AllBuild" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"
+        Condition="Exists('$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Commu‌​nity.Tasks.Targets')" />
+  <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" />
+  
+<!-- <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\TeamBuild\Microsoft.TeamFoundation.Build.targets" />  -->
+
+  <!-- <PropertyGroup>
+    <TPath>$(MSBuildExtensionsPath)\ExtensionPack\4.0\MSBuild.ExtensionPack.tasks</TPath>
+    <TPath Condition="Exists('$(MSBuildExtensionsPath)\ExtensionPack\4.0\MSBuild.ExtensionPack.tasks')">$(MSBuildExtensionsPath)\ExtensionPack\4.0\MSBuild.ExtensionPack.tasks</TPath>
+  </PropertyGroup>
+  <Import Project="$(TPath)"/> -->
+  <PropertyGroup>
+    
+    <WorkingDirectory>D:\Jenkins_workspace\workspace\.netbuild</WorkingDirectory>
+    <SourceFolder>$(WorkingDirectory)\</SourceFolder>
+    <DeployFolder>C:\inetpub\wwwroot\CICDDEMO</DeployFolder>
+	<DeployFolderDEV>C:\inetpub\wwwroot\CICDDEMO</DeployFolderDEV>
+	<SolutionFileName>ContosoUniversity.sln</SolutionFileName>
+    <BuildConfiguartion>Release</BuildConfiguartion>
+    <BuildLogsDirectory>D:\BuildLogs</BuildLogsDirectory>
+    <DOUBLE_QUOTES>%22</DOUBLE_QUOTES>
+	<Deploy_Batchfile>D:\Jenkins_workspace\workspace\.netbuild</Deploy_Batchfile>
+	<Apppool>CICDDEMO</Apppool>
+	<dServer>127.0.0.1</dServer>
+   
+   
+  </PropertyGroup>
+
+   <Target Name="AllBuild">
+	<CallTarget Targets="PreBuild" ContinueOnError="false"/>
+	<CallTarget Targets="Build" ContinueOnError="false"/>
+	<!-- <CallTarget Targets="StopAppPool" ContinueOnError="True"/> -->
+	<CallTarget Targets="BackUp" ContinueOnError="False"/>
+	<CallTarget Targets="CleanupDEV" ContinueOnError="False"/>
+	<CallTarget Targets="Deployment" ContinueOnError="false"/>
+	<!-- <CallTarget Targets="StartAppPool" ContinueOnError="True"/> -->
+
+   </Target>
+   
+  <Target Name="PreBuild">
+    <CallTarget Targets="Cleanup" ContinueOnError="false"/>
+	
+  </Target>
+	
+ 
+
+  <Target Name="Build">
+    <CallTarget Targets="CompileCode" ContinueOnError="false" />
+    <CallTarget Targets="Create-Pkg" ContinueOnError="false"/>
+	
+  </Target>
+ 
+  <Target Name="Cleanup">
+    <Message Text="CleanUp Started...." />
+	<RemoveDir Directories="$(DeployFolder)"></RemoveDir>
+    <Message Text="CleanUp Completed...." />
+	<Message Text="Directory Creation Started...." />
+	<MakeDir Directories="$(DeployFolder)" />
+	<Message Text="Directory Creation Completed...." />
+  </Target>
+
+  <Target Name="CleanupDEV">
+    <Message Text="CleanUp Started...." />
+	<RemoveDir Directories="$(DeployFolderDEV)"></RemoveDir>
+    <Message Text="CleanUp Completed...." />
+	<Message Text="Directory Creation Started...." />
+	<MakeDir Directories="$(DeployFolderDEV)" />
+	<Message Text="Directory Creation Completed...." />
+  </Target>
+  
+  <Target Name="CompileCode">
+    <Message Text="CompileCode Started...." />
+    <Message Text="CICD  --> Build the Solution"></Message>
+    <!-- <Exec Command="$(Devenv) $(WorkingDirectory)\$(SolutionFileName) /Build &quot;Release|Any CPU"/> -->
+	<Message Text="$(BuildConfiguartion)" />
+    <MSBuild Projects="$(SourceFolder)\$(SolutionFileName)" Properties="Configuration=$(BuildConfiguartion);DebugSymbols=False;Optimize=True" />
+	<Message Text="CompileCode Completed...." />
+  </Target>
+
+  <Target Name="Create-Pkg">
+    <Message Text="Copying the contents to DeployFolder Started...." />
+ 
+	<Exec Command='$(Deploy_Batchfile)\Package_Creation.bat' /> 
+    <Message Text="CreateDeployFolder Completed...." />
+  </Target>
+  
+  
+ <!-- <Target Name="StopAppPool" Condition=" '$(AppPool)' != ''">		 -->
+		<!-- <Exec Command="psexec.exe \\$(dServer)  -d c:\windows\system32\inetsrv\appcmd stop apppool /apppool.name:$(Apppool)" WorkingDirectory="C:\PSTools\" ContinueOnError="True"> -->
+			<!-- <Output TaskParameter="Outputs" ItemName="T" /> -->
+		<!-- </Exec> -->
+<!-- </Target> -->
+	
+	<Target Name="BackUp">
+    <Message Text="Copying the contents to DeployFolder Started...." />
+   <Exec Command='$(Deploy_Batchfile)\BackUp.bat' /> 
+    <Message Text="CreateDeployFolder Completed...." />
+  </Target>
+  
+  <Target Name="Deployment">
+    <Message Text="Deployment Started...." />
+    <Exec Command='$(Deploy_Batchfile)\Deploy.bat' /> 
+    <Message Text="Deployment Completed...." />
+  </Target>
+  
+	<!-- <Target Name="StartAppPool" Condition=" '$(AppPool)' != ''">		 -->
+		<!-- <Exec Command="psexec.exe \\$(dServer)  -d c:\windows\system32\inetsrv\appcmd start apppool /apppool.name:$(Apppool)" WorkingDirectory="C:\PSTools\" ContinueOnError="True"> -->
+			<!-- <Output TaskParameter="Outputs" ItemName="T" /> -->
+		<!-- </Exec> -->
+	<!-- </Target> -->
+	
+	
+
+ </Project>
