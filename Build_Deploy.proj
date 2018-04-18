@@ -87,11 +87,17 @@
   </Target>
   
   
- <Target Name="StopAppPool" Condition=" '$(AppPool)' != ''">		
-	<Exec Command="psexec.exe \\$(dServer)  -d c:\windows\system32\inetsrv\appcmd stop apppool /apppool.name:$(Apppool)" WorkingDirectory="C:\PSTools\" ContinueOnError="True">
-			<Output TaskParameter="Outputs" ItemName="T" /> 
-		</Exec>
- </Target>
+ <!-- <Target Name="StopAppPool" Condition=" '$(AppPool)' != ''">		 -->
+	<!-- <Exec Command="psexec.exe \\$(dServer)  -d c:\windows\system32\inetsrv\appcmd stop apppool /apppool.name:$(Apppool)" WorkingDirectory="C:\PSTools\" ContinueOnError="True"> -->
+			<!-- <Output TaskParameter="Outputs" ItemName="T" />  -->
+		<!-- </Exec> -->
+ <!-- </Target> -->
+ 
+ <Target Name="StartAppPool" Condition=" '$(AppPool)' != ''">		
+<Exec Command="c:\windows\system32\inetsrv\appcmd stop apppool /apppool.name:$(Apppool)" ContinueOnError="false">
+			 
+	 </Exec>
+ </Target> 
 	
 	<Target Name="BackUp">
     <Message Text="Copying the contents to DeployFolder Started...." />
@@ -105,11 +111,16 @@
     <Message Text="Deployment Completed...." />
   </Target>
   
-<Target Name="StartAppPool" Condition=" '$(AppPool)' != ''">		
-<Exec Command="psexec.exe \\$(dServer)  -d c:\windows\system32\inetsrv\appcmd start apppool /apppool.name:$(Apppool)" WorkingDirectory="C:\PSTools\" ContinueOnError="True">
-			 <Output TaskParameter="Outputs" ItemName="T" /> 
+  <Target Name="StartAppPool" Condition=" '$(AppPool)' != ''">		
+	<Exec Command="c:\windows\system32\inetsrv\appcmd start apppool /apppool.name:$(Apppool)" ContinueOnError="True">
+			 
 	 </Exec>
  </Target> 
+<!-- <Target Name="StartAppPool" Condition=" '$(AppPool)' != ''">		 -->
+<!-- <Exec Command="psexec.exe \\$(dServer)  -d c:\windows\system32\inetsrv\appcmd start apppool /apppool.name:$(Apppool)" WorkingDirectory="C:\PSTools\" ContinueOnError="True"> -->
+			 <!-- <Output TaskParameter="Outputs" ItemName="T" />  -->
+	 <!-- </Exec> -->
+ <!-- </Target>  -->
 	
 	
 
