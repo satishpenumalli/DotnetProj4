@@ -29,10 +29,11 @@
   </PropertyGroup>
 
    <Target Name="AllBuild">
+	<CallTarget Targets="BackUp" ContinueOnError="False"/>
 	<CallTarget Targets="PreBuild" ContinueOnError="false"/>
 	<CallTarget Targets="Build" ContinueOnError="false"/>
 	<CallTarget Targets="StopAppPool" ContinueOnError="True"/> 
-	<CallTarget Targets="BackUp" ContinueOnError="False"/>
+	
 	<CallTarget Targets="CleanupDEV" ContinueOnError="False"/>
 	<CallTarget Targets="Deployment" ContinueOnError="false"/>
 	 <CallTarget Targets="StartAppPool" ContinueOnError="True"/> 
