@@ -1,6 +1,6 @@
 @ECHO ON   
 
-SET SOURCE_FLOLDER=D:\Jenkins_workspace\workspace\.netbuild\ContosoUniversity\obj\Release\Package\PackageTmp
+SET SOURCE_FLOLDER=D:\Jenkins_workspace\workspace\DotNet_CICDDEMO\ContosoUniversity\obj\Release\Package\PackageTmp
 
 SET DEPLOY_FOLDER=D:\artifacts\
 
